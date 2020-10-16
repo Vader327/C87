@@ -32,6 +32,7 @@ export default class WelcomeScreen extends React.Component{
 					address: this.state.address,
 					contact: this.state.contact,
 					email_id: this.state.username,
+					IsBookRequestActive: false,
 				})
 				return Alert.alert("User added successfully!", '', [{
 					text: 'Ok',
@@ -106,15 +107,14 @@ export default class WelcomeScreen extends React.Component{
 
   render(){
 		return (
-			<View style={{height: '100%', backgroundColor: '#f8be85'}}>
+			<KeyboardAvoidingView behavior="padding" enabled style={{flex: 1, height: '100%', backgroundColor: '#f8be85'}}>
 				<View style={{alignContent: 'center', justifyContent: 'center'}}>
 					{this.showModal()}
 				</View>
 
-				<View style={{alignItems:'center',}}>
+				<View style={{alignItems:'center'}}>
 					<BookSanta />
-					<Text style={{fontSize:30, fontWeight:'600', paddingBottom:30, color:'#ff3d00'}}>
-						Book Santa</Text>
+					<Text style={{fontSize:30, fontWeight:'600', paddingBottom:30, color:'#ff3d00'}}>Book Santa</Text>
 				</View>
 
 				<View>
@@ -136,7 +136,7 @@ export default class WelcomeScreen extends React.Component{
 				onPress={()=>{this.setState({isModalVisible: true})}}>
 					<Text style={styles.buttonText}>Sign Up</Text>
 				</TouchableOpacity>
-			</View>
+			</KeyboardAvoidingView>
 		);
   }
 }

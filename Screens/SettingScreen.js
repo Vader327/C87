@@ -54,7 +54,7 @@ export default class SettingScreen extends React.Component{
   render(){
     return(
       <View style={{height: '100%'}}>
-        <MyHeader title="Settings" />
+        <MyHeader title="Settings" navigation={this.props.navigation} />
 
         <KeyboardAvoidingView behavior="padding" enabled style={{height: '100%'}}>
           <ScrollView style={{height: '100%'}}>

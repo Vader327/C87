@@ -16,7 +16,8 @@ export default class RecieverDetailsScreen extends React.Component{
       recieverName: '',
       recieverContact: '',
       recieverAddress: '',
-      recieverRequestDocId: ''
+      recieverRequestDocId: '',
+      username: '',
     }
   }
 
@@ -40,6 +41,15 @@ export default class RecieverDetailsScreen extends React.Component{
     })
   }
 
+  getUserDetails=(userId)=>{
+    db.collection("users").where('email_id', '==', userId).get()
+    .then((snapshot)=>{
+      snapshot.forEach((doc) => {
+        this.setState({username: doc.data().first_name + " " + doc.data().last_name})
+      })
+    })
+  }
+
   updateBookStatus=()=>{
     db.collection('all_donations').add({
       book_name: this.state.bookName,
@@ -50,8 +60,22 @@ export default class RecieverDetailsScreen extends React.Component{
     })
   }
 
+  addNotification=()=>{
+    var message = this.state.username + " has shown interest in taking the book!"
+    db.collection('all_notifications').add({
+      "targeted_user_id": this.state.recieverId,
+      "donor_id": this.state.userId,
+      "request_id": this.state.requestId,
+      "book_name": this.state.bookName,
+      "date": firebase.firestore.FieldValue.serverTimestamp(),
+      "notification_status": 'unread',
+      'message': message
+    })
+  }
+
   componentDidMount(){
     this.getRecieverDetails();
+    this.getUserDetails(this.state.userId);
   }
 
   render(){
@@ -94,8 +118,9 @@ export default class RecieverDetailsScreen extends React.Component{
             {this.state.recieverId !== this.state.userId
               ?(<TouchableOpacity style={styles.button}
                     onPress={()=>{
-                      this.updateBookStatus()
-                      this.props.navigation.navigate('My Donations')
+                      this.updateBookStatus();
+                      this.addNotification();
+                      this.props.navigation.navigate('My Donations');
                     }}>
                   <Text style={{color: '#ffffff', fontWeight: '600', fontSize: 17,}}>I want to Donate</Text>
                 </TouchableOpacity>
