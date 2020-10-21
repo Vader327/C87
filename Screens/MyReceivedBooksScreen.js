@@ -40,7 +40,7 @@ export default class MyReceivedBooksScreen extends Component{
     <ListItem
       key={i}
       title={item.book_name}
-      subtitle={item.bookStatus}
+      subtitle={item.book_status}
       titleStyle={{ color: 'black', fontWeight: 'bold' }}
       bottomDivider
     />

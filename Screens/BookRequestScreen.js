@@ -118,7 +118,6 @@ export default class BookRequestScreen extends React.Component{
   }
 
   updateBookRequestStatus=()=>{
-    console.log("hello" + this.state.docId + " 1")
     db.collection('requested_books').doc(this.state.docId).update({book_status: 'received'})
     db.collection("users").where("email_id", "==", this.state.userID).get().then((snapshot)=>{
       snapshot.forEach((doc)=>{
